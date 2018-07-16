@@ -1,14 +1,29 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+<ion-header no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button menuToggle icon-only>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Logo</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content no-padding>
+  <ion-row>
+    <!-- <ion-item no-padding> -->
+    <div class="input-content">
+      <ion-input [(ngModel)]="userAddress" placeholder="Digite seu endereço"></ion-input>
+      <button clear item-right no-margin class="button-close" (tap)="cleanInput()"><ion-icon name="close"></ion-icon></button>
+    <!-- </ion-item> -->
+    </div>
+  </ion-row>
+  <agm-map [zoom]= "20" [latitude]="lat" [longitude]="lng">
+    <agm-marker animation="DROP" [latitude]="lat" [longitude]="lng" [markerDraggable]="true"  (dragEnd)="markerDragEnd($event)"></agm-marker>
+  </agm-map>
 </ion-content>
+<ion-footer>
+  <button ion-button full no-margin (tap)="setCurrentLocation()">
+      <ion-icon name="navigate"></ion-icon>
+  </button>
+</ion-footer>
