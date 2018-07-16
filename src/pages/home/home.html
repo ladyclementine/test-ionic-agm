@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header no-border [class]="className" >
     <ion-toolbar>
         <ion-buttons start>
             <button ion-button menuToggle icon-only>
@@ -8,21 +8,32 @@
         <ion-title>Logo</ion-title>
     </ion-toolbar>
 </ion-header>
-
-<ion-content no-padding>
-  <ion-row>
-    <!-- <ion-item no-padding> -->
+<div class="my-overlay" padding [hidden]="overlayHidden">
+    <ion-row justify-content-start>
+        <button ion-button no-margin no-padding  (click)="hideOverlay()">
+           <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-row>
+    <ion-row>
     <div class="input-content">
-      <ion-input [(ngModel)]="userAddress" placeholder="Digite seu endereço"></ion-input>
-      <button clear item-right no-margin class="button-close" (tap)="cleanInput()"><ion-icon name="close"></ion-icon></button>
-    <!-- </ion-item> -->
+        <ion-input id="txtHome" type="text"></ion-input>
     </div>
-  </ion-row>
-  <agm-map [zoom]= "20" [latitude]="lat" [longitude]="lng">
-    <agm-marker animation="DROP" [latitude]="lat" [longitude]="lng" [markerDraggable]="true"  (dragEnd)="markerDragEnd($event)"></agm-marker>
-  </agm-map>
+    </ion-row>
+</div>
+<ion-content no-padding>
+<div [class]="className" style="height: 100%;">
+    <ion-row>
+        <div class="input-content">
+        <ion-input [(ngModel)]="userAddress" placeholder="Digite seu endereço" (tap)="openSearchContent()"></ion-input>
+        <button clear item-right no-margin class="button-close" (tap)="cleanInput()"><ion-icon name="close"></ion-icon></button>
+        </div>
+    </ion-row>
+    <agm-map [zoom]= "20" [latitude]="lat" [longitude]="lng">
+        <agm-marker animation="DROP" [latitude]="lat" [longitude]="lng" [markerDraggable]="true"  (dragEnd)="markerDragEnd($event)"></agm-marker>
+    </agm-map>
+</div>
 </ion-content>
-<ion-footer>
+<ion-footer [class]="className" >
   <button ion-button full no-margin (tap)="setCurrentLocation()">
       <ion-icon name="navigate"></ion-icon>
   </button>

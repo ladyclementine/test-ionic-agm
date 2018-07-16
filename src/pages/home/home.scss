@@ -1,4 +1,7 @@
 page-home {
+    .pac-container, .pac-item {
+        width: 100% !important;
+    }
     agm-map {
         height: 100%;
     }
@@ -42,4 +45,54 @@ page-home {
         color: #343434; 
         font-size: 1.4rem;
     } 
+    .my-overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #4926a8;
+        opacity: 0.9;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        transition: 2s;
+        ion-scroll{
+            height: 100%;
+        }
+    }
+    .blur{
+        filter: blur(8px);
+    }
+    // search
+    .searchbar{
+        background-color: transparent;
+    }
+    .searchbar .searchbar-input{
+        border-radius: 0;
+    }
+    .search-list{
+        .item{
+            background-color: transparent;
+            padding-left: 0;
+        }
+        .label{    
+            color: #fff;
+            padding-left: 10px;
+        }
+    }
+    .pac-container{
+        width: 100% !important;
+        position: absolute !important;
+        top: 106px !important;
+        display: block !important;
+        height: 100% !important;
+        margin: 5% 8% !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .pac-item{
+        border: none !important;
+        padding: 0 !important;
+    }
+
 }
