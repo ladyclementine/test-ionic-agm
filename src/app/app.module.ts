@@ -12,6 +12,7 @@ import { NativeGeocoder} from '@ionic-native/native-geocoder';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http'
 import { AgmCoreModule } from '@agm/core';
+import { ComponentsModule } from '../components/components.module'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AgmCoreModule } from '@agm/core';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB9OpY9ajfxP2vRgyXaVb1Ul39D5EVNrQ0',
       libraries: ["places"]
-    })
+    }),
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,0 +1,22 @@
+<ion-row class="map-input-content">
+    <ion-col col-2 no-padding class="map-input-content__search" (tap)="openSearchContent()">
+        <ion-icon name="search"></ion-icon>
+    </ion-col>
+    <ion-col col-10 no-padding class="map-input-content__input">
+      <ion-input [(ngModel)]="userAddress" placeholder="Digite seu endereço"></ion-input>
+      <button clear item-right no-margin class="button-close" (tap)="cleanInput()"><ion-icon name="close"></ion-icon></button>
+    </ion-col>
+</ion-row>
+<agm-map [zoom]= "20" [latitude]="lat" [longitude]="lng">
+  <agm-marker animation="DROP" [latitude]="lat" [longitude]="lng" [markerDraggable]="true"  (dragEnd)="markerDragEnd($event)"></agm-marker>
+</agm-map>
+<ion-footer [class]="className">
+  <ion-row no-margin justify-content-between class="footer-content">
+    <button ion-button no-margin (tap)="setCurrentLocation()" class="footer-content__button-left">
+        <ion-icon name="navigate"></ion-icon>
+    </button>
+    <button ion-button no-margin (tap)="getChoosenAddress(userAddress)" class="footer-content__button-right">
+        OK
+    </button>
+  </ion-row>
+</ion-footer>
