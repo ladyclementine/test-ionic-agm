@@ -1,8 +1,9 @@
 import { Component, NgZone, ViewChild} from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Http} from '@angular/http';
 import { FormControl } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-home',
@@ -20,10 +21,23 @@ export class HomePage {
   public searchElementRef;
   constructor(public http: Http, public navCtrl: NavController, 
               private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone ) 
+              private ngZone: NgZone,
+              private camera: Camera, 
+              public alertCtrl: AlertController ) 
   {
     //create search FormControl
     this.searchControl = new FormControl();
+  }
+  alert(data, data2) {
+    let alert = this.alertCtrl.create({
+      title: data,
+      subTitle: data2,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  } 
+  go(){
+    this.navCtrl.push("AvatarPage");
   }
   getAddress($event){
     console.log($event)
@@ -65,6 +79,7 @@ export class HomePage {
     // input.style.css
     console.log(input)
   }
+
   hideOverlay(){
     this.overlayHidden = true;
     this.className = 'no-blur'

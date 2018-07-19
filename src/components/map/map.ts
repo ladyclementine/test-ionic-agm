@@ -25,7 +25,7 @@ export class MapComponent implements OnChanges{
     this.userAddress = changes.address.currentValue;
     this.lat = changes.lt.currentValue;
     this.lng = changes.lg.currentValue;
-    this.alert('', JSON.stringify(changes))
+    // this.alert('', JSON.stringify(changes))
   }
   constructor(private nativeGeocoder: NativeGeocoder, private geolocation: Geolocation, 
     private alertCtrl: AlertController, public loadingCtrl: LoadingController) {
@@ -54,12 +54,9 @@ export class MapComponent implements OnChanges{
     this.userAddress =  ""
   }
   getChoosenAddress(userAddress){
-    this.alert('', userAddress)
     this.notify.emit(userAddress);
   }
   openSearchContent(){
-    // this.lat = this.lt
-    // this.lng = this.lg
     this.ionClick.emit();
   }
   setCurrentLocation(){

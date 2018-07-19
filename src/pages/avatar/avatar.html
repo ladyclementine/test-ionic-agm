@@ -1,0 +1,15 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>avatar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <button ion-button (click)="getImage()"> open câmera</button>
+    <img *ngIf="imageSrc" src="{{imageSrc}}"/>  
+    <p>erro django {{errorSend  | json}}</p>
+    <p>erro transfer {{errorTransfer | json}}</p>
+</ion-content>

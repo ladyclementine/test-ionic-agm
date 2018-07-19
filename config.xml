@@ -92,5 +92,7 @@
     </plugin>
     <allow-navigation href="http://192.168.0.39:8101" />
     <allow-navigation href="http://192.168.0.39:8100" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <engine name="ios" spec="4.5.4" />
 </widget>

@@ -13,7 +13,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http'
 import { AgmCoreModule } from '@agm/core';
 import { ComponentsModule } from '../components/components.module'
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer';
 @NgModule({
   declarations: [
     MyApp,
@@ -42,6 +44,9 @@ import { ComponentsModule } from '../components/components.module'
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
     Geolocation,
     NativeGeocoder,
+    Camera,
+    File,
+    FileTransfer
 
   ]
 })

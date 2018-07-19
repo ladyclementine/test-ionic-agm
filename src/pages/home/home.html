@@ -21,7 +21,8 @@
     </ion-row>
 </div>
 <ion-content no-padding>
-    <div [class]="className" style="height: 100%;">
-        <map (ionClick)="openOverlay($event)" [lt]="lat" [lg]="lng" [address]= "address" (notify)="getAddress($event)"></map>
-    </div>
+    <button ion-button (tap)="go()"> testete</button>
+    <!-- <div [class]="className" style="height: 100%;">
+        <map (ionClick)="openOverlay($event)" [lt]="lat" [lg]="lng" [address]="address" (notify)="getAddress($event)"></map>
+    </div> -->
 </ion-content>
