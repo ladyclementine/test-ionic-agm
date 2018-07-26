@@ -3,7 +3,7 @@
     <name>myApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.0.39:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -95,4 +95,7 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <engine name="ios" spec="4.5.4" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="^2.2.2">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Escolha fotos para ajudar na explicação da sua necessidade" />
+    </plugin>
 </widget>

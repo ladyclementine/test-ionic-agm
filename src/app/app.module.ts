@@ -16,6 +16,10 @@ import { ComponentsModule } from '../components/components.module'
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+
 @NgModule({
   declarations: [
     MyApp,
@@ -24,6 +28,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-nativ
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    SocketIoModule.forRoot(config),
     HttpModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB9OpY9ajfxP2vRgyXaVb1Ul39D5EVNrQ0',
@@ -46,7 +51,8 @@ import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-nativ
     NativeGeocoder,
     Camera,
     File,
-    FileTransfer
+    FileTransfer,
+    ImagePicker
 
   ]
 })

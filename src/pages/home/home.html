@@ -1,28 +1,29 @@
-<ion-header no-border [class]="className" >
-    <ion-toolbar>
-        <ion-buttons start>
-            <button ion-button menuToggle icon-only>
-                <ion-icon name="arrow-back"></ion-icon>
-            </button>
-        </ion-buttons>
-        <ion-title>Logo</ion-title>
-    </ion-toolbar>
+<ion-header>
+    <ion-navbar>    
+        <ion-title>
+        Chat home
+        </ion-title>
+    </ion-navbar>
 </ion-header>
-<div class="my-overlay" padding [hidden]="overlayHidden">
-    <ion-row justify-content-start>
-        <button ion-button no-margin no-padding  (click)="hideOverlay()">
-           <ion-icon name="close"></ion-icon>
-        </button>
-    </ion-row>
-    <ion-row>
-    <div class="input-content">
-        <ion-input id="txtHome" type="text" (ionChange)="test()"></ion-input>
-    </div>
-    </ion-row>
-</div>
-<ion-content no-padding>
-    <button ion-button (tap)="go()"> testete</button>
-    <!-- <div [class]="className" style="height: 100%;">
-        <map (ionClick)="openOverlay($event)" [lt]="lat" [lg]="lng" [address]="address" (notify)="getAddress($event)"></map>
-    </div> -->
+ 
+<ion-content padding>
+<ion-item>
+    <ion-label stacked>Set Nickname</ion-label>
+    <ion-input type="text" [(ngModel)]="nickname" placeholder="Nickname"></ion-input>
+</ion-item>
+<button ion-button full (click)="setNickname(nickname)" [disabled]="nickname === ''">Join Chat as {{ nickname }}</button>
+  <h6>Iniciar conversa com:</h6>
+  <ion-list>
+      <ion-item *ngFor="let employer of employers" (click)="toInvite(employer.name)">
+          <span>{{employer.name}}</span>
+      </ion-item>
+  </ion-list>
+
+  <h6>Conversas iniciadas:</h6>
+  <ion-list>
+    <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)">{{conversa.user_host_room}}</ion-item>
+ </ion-list>
+ <ion-list>
+    <ion-item *ngFor="let conversa of conversas_chamei" (click)="goChat(conversa)">{{conversa.user_room}}</ion-item>
+</ion-list>
 </ion-content>

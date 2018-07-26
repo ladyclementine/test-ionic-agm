@@ -1,87 +1,89 @@
-import { Component, NgZone, ViewChild} from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
-import { Http} from '@angular/http';
-import { FormControl } from "@angular/forms";
-import { MapsAPILoader } from '@agm/core';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Component } from '@angular/core';
+import { NavController, ModalController } from 'ionic-angular';
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
+  templateUrl: 'home.html'
 })
 export class HomePage {
-  public lat: number;
-  public lng: number;
-  public address: string;
-  public overlayHidden: boolean = true;
-  public className: string = 'no-blur';
-  public searchControl: FormControl;
-
-  @ViewChild("search")
-  public searchElementRef;
-  constructor(public http: Http, public navCtrl: NavController, 
-              private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone,
-              private camera: Camera, 
-              public alertCtrl: AlertController ) 
-  {
-    //create search FormControl
-    this.searchControl = new FormControl();
-  }
-  alert(data, data2) {
-    let alert = this.alertCtrl.create({
-      title: data,
-      subTitle: data2,
-      buttons: ['Dismiss']
+  nickname = ''
+  employer = ''
+  employers = [];
+  conversas: any = []
+  conversas_chamei: any = []
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController, private socket: Socket) {
+    this.employers = [
+      {name: 'Rayane'},
+      {name: 'Lucas'},
+      {name: 'José'},
+      {name: 'Bruno'},
+    ];
+    this.getChats().subscribe(data => {
+      if(this.conversas.includes(data)){
+        console.log('ja iniciou um room com ele')
+      } else {
+        console.log(data)
+        // this.conversas.push(data);
+      }
     });
-    alert.present();
-  } 
-  go(){
-    this.navCtrl.push("AvatarPage");
-  }
-  getAddress($event){
-    console.log($event)
-  }
-  openOverlay($event){
-    this.overlayHidden = false;
-    this.className = 'blur'
-  }
-  ionViewDidLoad() {
-    this.searchControl = new FormControl();
-    //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      let nativeHomeInputBox = document.getElementById('txtHome').getElementsByTagName('input')[0];
-      let autocomplete = new google.maps.places.Autocomplete(nativeHomeInputBox, {
-          types: ["address"]
-      });
-      autocomplete.addListener("place_changed", () => {
-          this.ngZone.run(() => {
-              //get the place result
-              let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-              //verify result
-              if (place.geometry === undefined || place.geometry === null) {
-                  return;
-              }
-              console.log(nativeHomeInputBox.value)
-              if(nativeHomeInputBox.value){
-               //set latitude, longitude
-                this.address = nativeHomeInputBox.value
-                this.lat = place.geometry.location.lat();
-                this.lng = place.geometry.location.lng();
-                this.hideOverlay();
-              }
-          });
-      });
-    });
-  }
-  test(){
-    let input = document.getElementsByClassName("pac-container")[0]
-    // input.style.css
-    console.log(input)
-  }
+    this.listenToJoin().subscribe(data => {
+      console.log(data['user_room'])
+      console.log(this.nickname)
 
-  hideOverlay(){
-    this.overlayHidden = true;
-    this.className = 'no-blur'
+      if(data['user_room'] == this.nickname){
+        console.log("me chamaram")
+        this.conversas.push(data)
+        // this.socket.emit('enterRoom', data['room_id']);
+      } else {
+        this.conversas_chamei.push(data)
+      }
+
+    });
+   }
+   setNickname(nickname){
+    this.nickname = nickname
+   }
+   //convida um usuario para um room
+   toInvite(user_room){
+    this.socket.connect();
+    this.employer = user_room
+    this.socket.emit('room', {user_room: user_room, user_host_room: this.nickname});
+    // let profileModal = this.modalCtrl.create('ChatRoomPage');
+    // profileModal.present();
+   }
+   //escuta quando alguem me convida para um room
+   listenToJoin() {
+    let observable = new Observable(observer => {
+      this.socket.on('callSpecificUser', function(data) {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+  goChat(chat){
+    this.socket.connect();
+    this.socket.emit('Enterroom', chat.user_room);
+    let profileModal = this.modalCtrl.create('ChatRoomPage', chat);
+    profileModal.present();
+  }
+   getChats() {
+    let observable = new Observable(observer => {
+      this.socket.on('getConections', function(data) {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
+  joinChat(room) {
+    this.socket.connect();
+    this.socket.emit('room', room);
+    this.socket.emit('set-nickname', this.nickname);
+    let profileModal = this.modalCtrl.create('ChatRoomPage', { nickname: this.nickname });
+    profileModal.present();
+    // profileModal.onDidDismiss(data => {
+    //   console.log(data)
+    // });
   }
 }
