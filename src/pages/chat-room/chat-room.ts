@@ -10,21 +10,32 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ChatRoomPage {
   messages = [];
-  nickname = '';
   message = '';
-  clients: any  = [];
+  current_chat_info: any;
+  chatting_with: any;
+  current_user: any;
   constructor(private navCtrl: NavController, private navParams: NavParams, 
               private socket: Socket, private toastCtrl: ToastController, 
               public viewCtrl: ViewController) {
+    //recebe mensagens            
     this.getMessages().subscribe(message => {
-      console.log('mensages', message)
       this.messages.push(message);
+      console.log(message)
     });
+    this.current_chat_info = this.navParams.data.chat
+    console.log(this.current_chat_info)
+    this.current_user = this.navParams.data.current_user
+  }
+  ionViewWillLoad(){
+    if(this.current_chat_info.user_room !== this.current_user){
+      this.chatting_with = this.current_chat_info.user_room
+    } else {
+      this.chatting_with = this.current_chat_info.user_host_room
+    }
     console.log(this.navParams.data)
   }
- 
   sendMessage() {
-    this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data });
+    this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat });
     this.message = '';
   }
  
