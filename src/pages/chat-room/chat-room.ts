@@ -57,7 +57,7 @@ export class ChatRoomPage {
     return observable;
   }
   closeChat(){
-    // this.socket.disconnect();
+    this.socket.disconnect();
     this.viewCtrl.dismiss();
   }
   showToast(msg) {

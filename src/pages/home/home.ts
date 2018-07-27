@@ -29,9 +29,8 @@ export class HomePage {
     this.listenToJoin().subscribe(data => {
       if(data['user_room'] == this.nickname){
         console.log('eu' + data['user_room'] + 'fui convidado pelo:' +data['user_host_room'])
-        console.log('room', data['user_host_room'])
         this.socket.connect();
-        this.socket.emit('Enterroom', data['user_host_room']);
+        this.socket.emit('Enterroom', data['room_id']);
         this.conversas.push(data)
       } else  {
         this.conversas_chamei.push(data)
@@ -52,13 +51,13 @@ export class HomePage {
    //convida um usuario para um room
    toInvite(user_room){
     console.log(this.nickname + 'convidou' + user_room)
-    this.socket.connect();
-    this.socket.emit('Enterroom', this.nickname);
     this.employer = user_room
     this.socket.emit('room', {user_room: user_room, user_host_room: this.nickname});
-    let chat = {user_room: user_room, user_host_room:this.nickname, room_id:12131243134234}
-    let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user:this.nickname});
-    profileModal.present();
+    this.socket.connect();
+    // this.socket.emit('Enterroom', this.nickname);
+    // let chat = {user_room: user_room, user_host_room:this.nickname, room_id:12131243134234}
+    // let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user:this.nickname});
+    // profileModal.present();
    }
    //escuta quando alguem me convida para um room
    listenToJoin() {
@@ -72,7 +71,7 @@ export class HomePage {
   goChat(chat){
     console.log(chat.user_host_room)
     this.socket.connect();
-    this.socket.emit('Enterroom', chat.user_host_room);
+    this.socket.emit('Enterroom', chat.room_id);
     let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user:this.nickname});
     profileModal.present();
   }
