@@ -22,11 +22,11 @@ export class ChatRoomPage {
       this.messages.push(message);
       console.log(message)
     });
-    this.current_chat_info = this.navParams.data.chat
-    console.log(this.current_chat_info)
-    this.current_user = this.navParams.data.current_user
   }
   ionViewWillLoad(){
+    this.current_chat_info = this.navParams.data.chat
+    this.current_user = this.navParams.data.current_user
+    console.log('current_user:', this.current_user)
     if(this.current_chat_info.user_room !== this.current_user){
       this.chatting_with = this.current_chat_info.user_room
     } else {
@@ -35,7 +35,7 @@ export class ChatRoomPage {
     console.log(this.navParams.data)
   }
   sendMessage() {
-    this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat });
+    this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat, current_user: this.current_user });
     this.message = '';
   }
  
@@ -57,7 +57,7 @@ export class ChatRoomPage {
     return observable;
   }
   closeChat(){
-    this.socket.disconnect();
+    // this.socket.disconnect();
     this.viewCtrl.dismiss();
   }
   showToast(msg) {
