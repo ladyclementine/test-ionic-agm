@@ -11,33 +11,37 @@
         <ion-label stacked>Set Nickname</ion-label>
         <ion-input type="text" [(ngModel)]="nickname" placeholder="Nickname"></ion-input>
     </ion-item>
-    <button ion-button full (click)="setNickname(nickname)" [disabled]="nickname === ''">Join Chat as {{ nickname }}</button>
-    <h6>Solicitações:</h6>
-    <ion-list>
-        <ion-item *ngFor="let employer of employers" (click)="toInvite(employer.name)">
-            <span>{{employer.name}}</span>
-        </ion-item>
-    </ion-list>
-
-    <h6>Conversas:</h6>
-    <ion-list>
-        <ion-item *ngFor="let conversa of conversas_chamei" (click)="goChat(conversa)">
-        <ion-avatar item-start>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
-        </ion-avatar>
-        <h2>{{conversa.user_room}}</h2>
-        <!-- <h3>Don't Know What To Do!</h3> -->
-        <p>I've had a pretty messed up day. If we just...</p>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)" (click)="goChat(conversa)">
-        <ion-avatar item-start>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
-        </ion-avatar>
-        <h2>{{conversa.user_host_room}}</h2>
-        <!-- <h3>Don't Know What To Do!</h3> -->
-        <p>I've had a pretty messed up day. If we just...</p>
-        </ion-item>
-    </ion-list>
+    <div padding>
+        <ion-segment [(ngModel)]="pet">
+          <ion-segment-button value="kittens">
+            Conversas
+          </ion-segment-button>
+          <ion-segment-button value="puppies">
+            Orçamento 
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <div [ngSwitch]="pet">
+        <ion-list *ngSwitchCase="'puppies'">
+            <ion-item *ngFor="let employer of employers" (click)="toInvite(employer.name)">
+                <span>{{employer.name}}</span>
+            </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'kittens'">
+            <ion-item *ngFor="let conversa of conversas_chamei" (click)="goChat(conversa)">
+                <ion-avatar item-start>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
+                </ion-avatar>
+                <h2>{{conversa.user_room}}</h2>
+                <p>I've had a pretty messed up day. If we just...</p>
+            </ion-item>
+            <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)" (click)="goChat(conversa)">
+                <ion-avatar item-start>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
+                </ion-avatar>
+                <h2>{{conversa.user_host_room}}</h2>
+                <p>I've had a pretty messed up day. If we just...</p>
+            </ion-item>
+        </ion-list>
+      </div>
 </ion-content>

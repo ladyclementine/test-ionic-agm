@@ -18,7 +18,7 @@ import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+const config: SocketIoConfig = { url: 'http://192.168.0.39:3001', options: {} };
 
 @NgModule({
   declarations: [

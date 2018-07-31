@@ -19,8 +19,10 @@ export class ChatRoomPage {
               public viewCtrl: ViewController) {
     //recebe mensagens            
     this.getMessages().subscribe(message => {
-      this.messages.push(message);
-      console.log(message)
+      console.log('menssagem', message)
+      //if(this.chatting_with == message['from'] || message['from'] == this.current_user){
+        this.messages.push(message);
+      //}
     });
   }
   ionViewWillLoad(){
