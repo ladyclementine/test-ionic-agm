@@ -22,17 +22,17 @@ export class HomePage {
       {name: 'José'},
       {name: 'Bruno'},
     ];
+
     //recebe mensagens            
     this.getMessages().subscribe(message => {
       this.messages.push(message);
       console.log('escutando da home', message)
     });
-    //escuta msgs
+
+    //escuta mensagens
     this.listenToJoin().subscribe(data => {
       if(data['user_room'] == this.nickname){
         console.log('eu' + data['user_room'] + 'fui convidado pelo:' + data['user_host_room'])
-        this.socket.connect();
-        this.socket.emit('Enterroom', data['room_id']);
         this.conversas.push(data)
         this.pet = "kittens"
       } 
@@ -51,7 +51,7 @@ export class HomePage {
     })
     return observable;
   }
-  //simboliza o nome dos dois participantes da conversa, podendo viar a ser o email cadastrado
+   //simboliza o nome dos dois participantes da conversa, podendo vir a ser o email cadastrado
    setNickname(nickname){
     this.nickname = nickname
    }
@@ -59,18 +59,17 @@ export class HomePage {
    //convida um usuario para um room
    toInvite(user_room){
     console.log(this.nickname + 'convidou' + user_room)
-    // user_room seria o employer, ou seja, ao jober inicia a conversa com a solicitacao escolhida
+    // user_room seria o employer, ou seja, ao jober inicia a conversa com o dono da solicitação escolhida
     this.employer = user_room
     // só quem pode iniciar uma conversa é o jober.
     this.socket.connect();
-    // let room_id = this.socket.connect().id 
-    // console.log(room_id)
-    this.socket.emit('room', {user_room: user_room, user_host_room: this.nickname});
-    // this.socket.emit('Enterroom', room_id);
-    // let chat = { user_room: user_room, user_host_room: this.nickname, room_id}
-    // let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user: this.nickname});
-    // profileModal.present();
+    let room_id = this.socket.connect().id 
+    this.socket.emit('room', {user_room: user_room, user_host_room: this.nickname, room_id:room_id });
+    let chat = { user_room: user_room, user_host_room: this.nickname, room_id }
+    let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user: this.nickname});
+    profileModal.present();
    }
+
    //escuta quando alguem me convida para um room
    listenToJoin() {
     let observable = new Observable(observer => {
@@ -80,6 +79,7 @@ export class HomePage {
     })
     return observable;
   }
+  //abre a pagina de chat
   goChat(chat){
     this.socket.connect();
     console.log('room_id', chat.room_id)

@@ -25,7 +25,7 @@ export class ChatRoomPage {
       //}
     });
   }
-  ionViewWillLoad(){
+  ionViewWillEnter(){
     this.current_chat_info = this.navParams.data.chat
     this.current_user = this.navParams.data.current_user
     console.log('current_user:', this.current_user)
