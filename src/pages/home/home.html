@@ -23,7 +23,7 @@
       </div>
       <div [ngSwitch]="pet">
         <ion-list *ngSwitchCase="'puppies'">
-            <ion-item *ngFor="let employer of employers" (click)="toInvite(employer.name)">
+            <ion-item *ngFor="let employer of employers" (click)="createChatSession(employer.name)">
                 <span>{{employer.name}}</span>
             </ion-item>
         </ion-list>
@@ -35,7 +35,7 @@
                 <h2>{{conversa.user_room}}</h2>
                 <p>I've had a pretty messed up day. If we just...</p>
             </ion-item>
-            <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)" (click)="goChat(conversa)">
+            <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)">
                 <ion-avatar item-start>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
                 </ion-avatar>

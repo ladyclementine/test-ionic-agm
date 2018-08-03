@@ -26,13 +26,14 @@ export class HomePage {
     //recebe mensagens            
     this.getMessages().subscribe(message => {
       this.messages.push(message);
-      console.log('escutando da home', message)
+      console.log('escutando from outside', message)
     });
 
-    //escuta mensagens
-    this.listenToJoin().subscribe(data => {
+    //escuta convites
+    this.listenInviteToJoin().subscribe(data => {
       if(data['user_room'] == this.nickname){
         console.log('eu' + data['user_room'] + 'fui convidado pelo:' + data['user_host_room'])
+        console.log(data)
         this.conversas.push(data)
         this.pet = "kittens"
       } 
@@ -42,36 +43,42 @@ export class HomePage {
       }
     });
    }
-   // recebe msgs
+   // recebe mensagens
    getMessages() {
     let observable = new Observable(observer => {
-      this.socket.on('message', (data) => {
+      this.socket.on('messageToOutside', (data) => {
         observer.next(data);
       });
     })
     return observable;
   }
    //simboliza o nome dos dois participantes da conversa, podendo vir a ser o email cadastrado
-   setNickname(nickname){
+  setNickname(nickname){
     this.nickname = nickname
-   }
+  }
 
-   //convida um usuario para um room
-   toInvite(user_room){
-    console.log(this.nickname + 'convidou' + user_room)
-    // user_room seria o employer, ou seja, ao jober inicia a conversa com o dono da solicitação escolhida
+  toInviteAndOpenChat(user_room, socket_session){
+    setTimeout(() => {
+      let room_id = socket_session.id
+      this.socket.emit('room', { user_room: user_room, user_host_room: this.nickname, room_id:room_id });
+      let chat = { user_room: user_room, user_host_room: this.nickname, room_id:room_id }
+      let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user: this.nickname});
+      profileModal.present();
+    }, 1000);
+  }
+
+  // só quem pode iniciar uma conversa é o jober.
+  createChatSession(user_room){
     this.employer = user_room
-    // só quem pode iniciar uma conversa é o jober.
-    this.socket.connect();
-    let room_id = this.socket.connect().id 
-    this.socket.emit('room', {user_room: user_room, user_host_room: this.nickname, room_id:room_id });
-    let chat = { user_room: user_room, user_host_room: this.nickname, room_id }
-    let profileModal = this.modalCtrl.create('ChatRoomPage', {chat:chat, current_user: this.nickname});
-    profileModal.present();
-   }
+    console.log(this.nickname + '' + 'convidou' + '' + user_room)
+    let socket_session = this.socket.connect(); 
+    console.log(socket_session)
+    this.toInviteAndOpenChat(user_room, socket_session)
+  }
 
-   //escuta quando alguem me convida para um room
-   listenToJoin() {
+
+  //escuta quando alguem me convida para um room
+  listenInviteToJoin() {
     let observable = new Observable(observer => {
       this.socket.on('callSpecificUser', function(data) {
         observer.next(data);
@@ -79,8 +86,10 @@ export class HomePage {
     })
     return observable;
   }
+
   //abre a pagina de chat
   goChat(chat){
+    console.log(chat)
     this.socket.connect();
     console.log('room_id', chat.room_id)
     this.socket.emit('Enterroom', chat.room_id);
