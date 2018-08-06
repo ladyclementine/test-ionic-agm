@@ -11,6 +11,7 @@
         <ion-label stacked>Set Nickname</ion-label>
         <ion-input type="text" [(ngModel)]="nickname" placeholder="Nickname"></ion-input>
     </ion-item>
+    <button ion-button small full margin-right (tap)="getChats()">Pegar conversas</button>
     <div padding>
         <ion-segment [(ngModel)]="pet">
           <ion-segment-button value="kittens">
@@ -32,16 +33,17 @@
                 <ion-avatar item-start>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
                 </ion-avatar>
-                <h2>{{conversa.user_room}}</h2>
+                <h2 *ngIf="conversa.user_host_room == nickname">{{conversa.user_room}}</h2>
+                <h2 *ngIf="conversa.user_room == nickname">{{conversa.user_host_room}}</h2>
                 <p>I've had a pretty messed up day. If we just...</p>
             </ion-item>
-            <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)">
+            <!-- <ion-item *ngFor="let conversa of conversas" (click)="goChat(conversa)">
                 <ion-avatar item-start>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSchbuU2O-3ZUoz2enL2OM_t_0EKQveMa_vlUlyFFFmwxgIBQN6">
                 </ion-avatar>
                 <h2>{{conversa.user_host_room}}</h2>
                 <p>I've had a pretty messed up day. If we just...</p>
-            </ion-item>
+            </ion-item> -->
         </ion-list>
       </div>
 </ion-content>

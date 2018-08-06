@@ -10,7 +10,7 @@ import { AppStorage } from '../../providers/storage/appstorage'
   templateUrl: 'chat-room.html',
 })
 export class ChatRoomPage {
-  messages = [];
+  messages: any  =[];
   message = '';
   current_chat_info: any;
   chatting_with: any;
@@ -21,11 +21,16 @@ export class ChatRoomPage {
     //recebe mensagens            
     this.getMessages().subscribe(message => {
       console.log('menssagem', message)
-      this.messages.push(message);
-      console.log(this.message)
+      if(this.messages.includes(message)){
+        console.log('ja tem')
+      } else {
+        this.messages.push(message);
+        console.log(this.message)
+      }
     });
     this.getHistory().subscribe(data => {
       console.log('data do redinho', data)
+      this.messages = data
     })
   }
   getHistory() {

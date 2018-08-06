@@ -5,9 +5,7 @@
           <ion-icon name="more"></ion-icon>
         </button>
       </ion-buttons>
-  
       <ion-title>{{chatting_with}}</ion-title>
-  
     </ion-toolbar>
   </ion-header>
 
@@ -19,21 +17,13 @@
         <span>{{ message.text }}</span>
         <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
       </ion-col>
- 
       <ion-col offset-3 col-9 *ngIf="message.from === current_user" class="message" [ngClass]="{'my_message': message.from === current_user, 'other_message': message.from !== current_user}">
         <span class="user_name">{{ message.from }}:</span><br>
         <span>{{ message.text }}</span>
         <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
       </ion-col>
-<!-- 
-      <ion-col offset-3 col-9  class="message">
-        <span class="user_name">{{ message.from }}:</span><br>
-        <span>{{ message.text }}</span>
-        <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
-      </ion-col>  -->
     </ion-row>
   </ion-grid>
- 
 </ion-content>
  
 <ion-footer>
