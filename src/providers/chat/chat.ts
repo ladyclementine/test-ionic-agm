@@ -27,6 +27,24 @@ export class ChatProvider {
     .catch(this.errorHandler)
     .toPromise();
   }
+  public getChatHistory(room_id){
+    let url = `http://localhost:3001/api/chat-history?query=${room_id}`;
+    return this.http.get(url, this.options)
+    .map((res) => {
+      return res.json();
+    })
+    .catch(this.errorHandler)
+    .toPromise();
+  }
+  public getChatNotification(email){
+    let url = `http://localhost:3001/api/message-alert?query=${email}`;
+    return this.http.get(url, this.options)
+    .map((res) => {
+      return res.json();
+    })
+    .catch(this.errorHandler)
+    .toPromise();
+  }
   private errorHandler(error: Response | any) {
       return Observable.throw("Erro ao tentar acessar o servidor.");
   }

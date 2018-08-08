@@ -3,6 +3,7 @@ import { NavController, IonicPage, NavParams, ToastController, ViewController } 
 import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
 import { AppStorage } from '../../providers/storage/appstorage'
+import { ChatProvider } from '../../providers/chat/chat'
 
 @IonicPage()
 @Component({
@@ -17,7 +18,8 @@ export class ChatRoomPage {
   current_user: any;
   constructor(private navCtrl: NavController, private navParams: NavParams, 
               private socket: Socket, private toastCtrl: ToastController, 
-              public viewCtrl: ViewController, public storage: AppStorage) {
+              public viewCtrl: ViewController, public storage: AppStorage,
+              public chatProvider: ChatProvider) {
     //recebe mensagens            
     this.getMessages().subscribe(message => {
       console.log('menssagem', message)
@@ -28,10 +30,10 @@ export class ChatRoomPage {
         console.log(this.message)
       }
     });
-    this.getHistory().subscribe(data => {
-      console.log('data do redinho', data)
-      this.messages = data
-    })
+    // this.getHistory().subscribe(data => {
+    //   console.log('data do redinho', data)
+    //   this.messages = data
+    // })
   }
   getHistory() {
     let observable = new Observable(observer => {
@@ -41,21 +43,17 @@ export class ChatRoomPage {
     })
     return observable;
   }
-  getMessagesFromStorage(){
+  getChatHistory(){
     setTimeout(() => {
-      // this.storage.getMsg().then((msgs) => {
-      //   console.log('tem mensagens', msgs)
-      //   if(msgs !== null){
-      //     // this.messages.push(msgs)
-      //     this.messages = msgs
-      //   }
-      // })
-      this.socket.emit('get-message-history', this.current_chat_info.room_id)
+      this.chatProvider.getChatHistory(this.current_chat_info.room_id).then((messages) =>{
+        console.log(messages.list)
+        this.messages = messages.list
+      })
+      // this.socket.emit('get-message-history', this.current_chat_info.room_id)
     }, 1000);
 
   }
   ionViewWillEnter(){
-    this.getMessagesFromStorage()
     this.current_chat_info = this.navParams.data.chat
     this.current_user = this.navParams.data.current_user
     console.log('current_user:', this.current_user)
@@ -65,6 +63,7 @@ export class ChatRoomPage {
       this.chatting_with = this.current_chat_info.user_host_room
     }
     console.log(this.navParams.data)
+    this.getChatHistory()
   }
   sendMessage() {
     this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat, current_user: this.current_user });

@@ -98,4 +98,5 @@
     <plugin name="cordova-plugin-telerik-imagepicker" spec="^2.2.2">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Escolha fotos para ajudar na explicação da sua necessidade" />
     </plugin>
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
 </widget>

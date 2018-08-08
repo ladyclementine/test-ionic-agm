@@ -19,8 +19,9 @@ import { FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-nativ
 import { ImagePicker } from '@ionic-native/image-picker';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 import { ChatProvider } from '../providers/chat/chat';
-// const config: SocketIoConfig = { url: 'http://192.168.0.39:3001', options: {} };
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+import { LocalNotifications } from '@ionic-native/local-notifications';
+const config: SocketIoConfig = { url: 'http://192.168.0.39:3001', options: {} };
+//const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
 @NgModule({
   declarations: [
@@ -56,8 +57,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     FileTransfer,
     ImagePicker,
     AppStorage,
-    ChatProvider
-
+    ChatProvider,
+    LocalNotifications
   ]
 })
 export class AppModule {}
