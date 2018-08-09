@@ -22,7 +22,7 @@ export class ChatRoomPage {
               public chatProvider: ChatProvider) {
     //recebe mensagens            
     this.getMessages().subscribe(message => {
-      console.log('menssagem', message)
+      // console.log('menssagem', message)
       if(this.messages.includes(message)){
         console.log('ja tem')
       } else {
@@ -66,10 +66,16 @@ export class ChatRoomPage {
     this.getChatHistory()
   }
   sendMessage() {
-    // let match = this.message.match(/^[a-z0-9._]+@[a-z0-9]+\.[a-z]+\.[a-z]+\.([a-z]+)?$/g)
-    // console.log(match)
-    this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat, current_user: this.current_user });
-    this.message = '';
+    let emailMatch = this.message.replace(/ /g,"").match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+    if(emailMatch){
+      console.log('nao pode dizer email')
+      let alert = {created: Date.now(), from: 'ijob', text: "Não envie informações de contato. Com o Ijob voce ficará mais seguro para negociar."}
+      this.messages.push(alert)
+      this.message = '';
+    } else {
+      this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat, current_user: this.current_user });
+      this.message = '';
+    }
   }
  
   getMessages() {
