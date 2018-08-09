@@ -20,19 +20,19 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    this.checkNewMessages()
+    // this.checkNewMessages()
   }
-  checkNewMessages(){
-    this.chatProvider.getChatNotification("Lucas").then((data) => {
-       if(data.has_message){
-         console.log('ei, tem mensagem nova querido.')
-       } else {
-        console.log('Não tem mensagem nova querido.')
-       }
-    })
-    setTimeout(() => {
-      this.checkNewMessages()
-    }, 10000);
-  }
+  // checkNewMessages(){
+  //   this.chatProvider.getChatNotification("Lucas").then((data) => {
+  //      if(data.has_message){
+  //        console.log('ei, tem mensagem nova querido.')
+  //      } else {
+  //       console.log('Não tem mensagem nova querido.')
+  //      }
+  //   })
+  //   setTimeout(() => {
+  //     this.checkNewMessages()
+  //   }, 10000);
+  // }
 }
 

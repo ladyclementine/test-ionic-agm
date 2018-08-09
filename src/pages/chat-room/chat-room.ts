@@ -66,6 +66,8 @@ export class ChatRoomPage {
     this.getChatHistory()
   }
   sendMessage() {
+    // let match = this.message.match(/^[a-z0-9._]+@[a-z0-9]+\.[a-z]+\.[a-z]+\.([a-z]+)?$/g)
+    // console.log(match)
     this.socket.emit('add-message', { text: this.message, room_info: this.navParams.data.chat, current_user: this.current_user });
     this.message = '';
   }

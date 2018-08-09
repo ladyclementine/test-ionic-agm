@@ -56,6 +56,7 @@ export class HomePage {
   newMessageNotification(){
     // Schedule delayed notification
     this.localNotifications.schedule({
+      title: 'Oie?',
       text: 'Delayed ILocalNotification',
       trigger: {at: new Date(new Date().getTime() + 3600)},
       led: 'FF0000',
