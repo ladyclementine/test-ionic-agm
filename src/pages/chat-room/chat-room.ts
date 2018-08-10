@@ -49,7 +49,6 @@ export class ChatRoomPage {
         console.log(messages.list)
         this.messages = messages.list
       })
-      // this.socket.emit('get-message-history', this.current_chat_info.room_id)
     }, 1000);
 
   }

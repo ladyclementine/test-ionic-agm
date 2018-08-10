@@ -27,18 +27,18 @@ export class HomePage {
       {name: 'Bruno'},
     ];
     //escuta convites
-    // this.listenInviteToJoin().subscribe(data => {
-    //   if(data['user_room'] == this.nickname){
-    //     console.log('eu' + data['user_room'] + 'fui convidado pelo:' + data['user_host_room'])
-    //     console.log(data)
-    //     this.conversas.push(data)
-    //     this.pet = "kittens"
-    //   } 
-    //   else if(data['user_room'] == this.employer && data['user_host_room'] == this.nickname) {
-    //     this.conversas_chamei.push(data)
-    //     this.pet = "kittens"
-    //   }
-    // });
+    this.listenInviteToJoin().subscribe(data => {
+      if(data['user_room'] == this.nickname){
+        console.log('eu' + data['user_room'] + 'fui convidado pelo:' + data['user_host_room'])
+        console.log(data)
+        this.conversas_chamei.push(data)
+        this.pet = "kittens"
+      } 
+      else if(data['user_room'] == this.employer && data['user_host_room'] == this.nickname) {
+        this.conversas_chamei.push(data)
+        this.pet = "kittens"
+      }
+    });
     // this.checkNewMessages()
    }
   //  checkNewMessages(){
@@ -65,7 +65,7 @@ export class HomePage {
   }
   getChats(){
     console.log(this.nickname)
-    this.socket.emit('getChatList', this.nickname);
+    // this.socket.emit('getChatList', this.nickname);
     this.chatProvider.getChat(this.nickname).then((data) => {
       this.conversas_chamei  = data.chatList
       console.log(data)
@@ -94,14 +94,14 @@ export class HomePage {
     this.toInviteAndOpenChat(user_room, socket_session)
   }
   //escuta quando alguem me convida para um room
-  // listenInviteToJoin() {
-  //   let observable = new Observable(observer => {
-  //     this.socket.on('callUser', function(data) {
-  //       observer.next(data);
-  //     });
-  //   })
-  //   return observable;
-  // }
+  listenInviteToJoin() {
+    let observable = new Observable(observer => {
+      this.socket.on('callUser', function(data) {
+        observer.next(data);
+      });
+    })
+    return observable;
+  }
 
   //abre a página de chat
   goChat(chat){

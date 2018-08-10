@@ -19,7 +19,7 @@ export class ChatProvider {
     this.options = new RequestOptions({headers: this.headers});
   }
   public getChat(email){
-    let url = `http://localhost:3001/api/chats?query=${email}`;
+    let url = `http://ijob-chat.devari.com.br/api/chats?query=${email}`;
     return this.http.get(url, this.options)
     .map((res) => {
       return res.json();
@@ -28,7 +28,7 @@ export class ChatProvider {
     .toPromise();
   }
   public getChatHistory(room_id){
-    let url = `http://localhost:3001/api/chat-history?query=${room_id}`;
+    let url = `http://ijob-chat.devari.com.br/api/chat-history?query=${room_id}`;
     return this.http.get(url, this.options)
     .map((res) => {
       return res.json();
@@ -37,7 +37,7 @@ export class ChatProvider {
     .toPromise();
   }
   public getChatNotification(email){
-    let url = `http://localhost:3001/api/message-alert?query=${email}`;
+    let url = `http://ijob-chat.devari.com.br/api/message-alert?query=${email}`;
     return this.http.get(url, this.options)
     .map((res) => {
       return res.json();
